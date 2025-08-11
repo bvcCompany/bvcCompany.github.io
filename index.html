@@ -1,0 +1,658 @@
+﻿
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B.V.C国際合同会社</title>
+    <style>
+        /* 基础样式变量 */
+        :root {
+            --purple-600: #8b5cf6;
+            --purple-800: #6d28d9;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-700: #374151;
+            --gray-900: #111827;
+            --transition-speed: 0.3s;
+        }
+        
+        /* 全局重置与基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        body {
+            background-color: white;
+            color: var(--gray-900);
+            line-height: 1.6;
+            scroll-behavior: smooth; /* 平滑滚动 */
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        /* 导航栏样式 */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+        
+        .logo-icon {
+            width: 2rem;
+            height: 2rem;
+            background-color: var(--purple-800);
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            transition: transform var(--transition-speed);
+        }
+        
+        .logo:hover .logo-icon {
+            transform: scale(1.1);
+        }
+        
+        .logo-text {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: var(--gray-900);
+        }
+        
+        /* 桌面导航链接 */
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--gray-700);
+            font-weight: 500;
+            transition: color var(--transition-speed);
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        
+        .nav-links a:hover {
+            color: var(--purple-600);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--purple-600);
+            transition: width var(--transition-speed);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        /* 语言选择器 */
+        .language-selector {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .language-btn {
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.25rem;
+            border: none;
+            background-color: var(--gray-100);
+            cursor: pointer;
+            transition: all var(--transition-speed);
+            font-weight: 500;
+        }
+        
+        .language-btn.active {
+            background-color: var(--purple-600);
+            color: white;
+        }
+        
+        .language-btn:hover:not(.active) {
+            background-color: var(--gray-200);
+            transform: translateY(-2px);
+        }
+        
+        /* 移动端菜单按钮 */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray-700);
+        }
+        
+        /* 主要内容样式 */
+        section {
+            padding: 3rem 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        
+        section:hover {
+            opacity: 0.95;
+        }
+        
+        .hero {
+            background: linear-gradient(to bottom right, var(--purple-800), var(--purple-600));
+            color: white;
+            text-align: center;
+            padding: 5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiMyMDIwMjAiIGZpbGwtb3BhY2l0eT0iMC4xIj48cGF0aCBkPSJNMzYgMzRoLTJ2LTRoMnY0em0wLTZ2LTRoLTJ2NGgyem0tNiAwdjRoLTJ2LTRoMnptNi0xMHY0aC0ydjRoMnptLTYgMHY0aC0ydjRoMnptLTYgMHY0aC0ydjRoMnptLTYgMHY0aC0ydjRoMnptLTEyIDB2NGgtMnYtNGgyem0xMi0xMHY0aC0ydjRoMnptLTYgMHY0aC0ydjRoMnptLTYgMHY0aC0ydjRoMnptMTIgMHY0aC0ydjRoMnptLTYgMHY0aC0ydjRoMnptLTEyIDB2NGgtMnYtNGgyem0xMi0xMHY0aC0ydjRoMnptLTYgMHY0aC0ydjRoMnptLTYgMHY0aC0ydjRoMnptMTIgMHY0aC0ydjRoMnptLTYgMHY0aC0ydjRoMnptLTEyIDB2NGgtMnYtNGgyem0xMi0xMHY0aC0ydjRoMnptLTYgMHY0aC0ydjRoMnptLTYgMHY0aC0ydjRoMnptMTIgMHY0aC0ydjRoMnptLTYgMHY0aC0ydjRoMnptLTEyIDB2NGgtMnYtNGgyem0xMi0xMHY0aC0ydjRoMnptLTYgMHY0aC0ydjRoMnptLTYgMHY0aC0ydjRoMnptMTIgMHY0aC0ydjRoMnptLTYgMHY0aC0ydjRoMnptLTEyIDB2NGgtMnYtNGgyem0wLTI0aDJ2LTRoLTIwdjR6Ii8+PC9nPjwvZz48L3N2Zz4=') repeat;
+            opacity: 0.2;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            position: relative;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background-color: white;
+            color: var(--purple-800);
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--gray-900);
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background-color: var(--purple-600);
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 2rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--gray-900);
+        }
+        
+        /* 页脚样式 */
+        footer {
+            background-color: var(--gray-900);
+            color: white;
+            padding: 3rem 0 1.5rem;
+            text-align: center;
+        }
+        
+        /* 响应式设计 - 平板 */
+        @media (min-width: 768px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        /* 响应式设计 - 桌面 */
+        @media (min-width: 1024px) {
+            .grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        /* 响应式设计 - 移动端 */
+        @media (max-width: 767px) {
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: white;
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                transform: translateY(-100%);
+                opacity: 0;
+                pointer-events: none;
+                transition: transform 0.3s, opacity 0.3s;
+            }
+            
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+                pointer-events: all;
+            }
+            
+            .nav-links a {
+                padding: 0.5rem 1rem;
+                border-radius: 0.25rem;
+            }
+            
+            .nav-links a:hover {
+                background-color: var(--gray-50);
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.75rem;
+            }
+            
+            .card {
+                padding: 1.5rem;
+            }
+        }
+        
+        /* 图片样式优化 */
+        .team-member-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            transition: transform 0.5s;
+        }
+        
+        .team-member-img:hover {
+            transform: scale(1.03);
+        }
+        
+        /* 加载动画 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">
+                    <div class="logo-icon"><img src="logo.png" style="height: 55px;" alt="logo-icon"></div>&nbsp;
+                    <span class="logo-text" data-lang-key="navbar.logo">B.V.C国際合同会社</span>
+                </a>                
+                <button class="menu-toggle" aria-label="菜单">☰</button>
+                
+                <div class="nav-links">
+                    <a href="#home" data-lang-key="navbar.home">ホーム</a>
+                    <a href="#about" data-lang-key="navbar.about">会社概要</a>
+                    <a href="#services" data-lang-key="navbar.services">サービス</a>
+                    <a href="#contact" data-lang-key="navbar.contact">お問い合わせ</a>
+                </div>
+                
+                <div class="language-selector">
+                    <button class="language-btn active" data-lang="ja">日本語</button>
+                    <button class="language-btn" data-lang="zh">中文</button>
+                    <button class="language-btn" data-lang="en">English</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 主要内容 -->
+     <!-- 首页 -->
+    <main>
+        <section id="home" class="hero fade-in">
+            <div class="container">
+                <h1 data-lang-key="hero.title">「関わった人全てをハッピーに」という理念のもと</h1>
+                <p data-lang-key="hero.subtitle">私たちはお客様一人ひとりの夢や希望を全力でサポートし、笑顔あふれる未来の実現を目指します。</p>
+                <a href="#contact" class="btn" data-lang-key="hero.cta">詳細を見る</a>
+            </div>
+        </section>
+        <!-- 关于我们 -->
+        <section id="about" class="container fade-in delay-1">
+            <h2 class="section-title" data-lang-key="about.title">会社概要</h2>
+            <div class="grid"  style="display: flex;">
+                <div class="card">
+                    <h3 data-lang-key="about.mission" style="text-align: center;">私たちの使命</h3>
+                    <p data-lang-key="about.missionText">B.V.C は「Bridge Vision Consulting」の略です。これは、進むべき道を見出せるための架け橋を表しています。弊社事業を通じて、国際教育の発展を促進し、より多くの学生に専門的で質の高い留学サービスを提供し、学生皆さんの未来を切り開く手助けができることを願っています。</p>
+                </div>
+            </div>
+        </section>
+        <!-- 服务 -->
+        <section id="services" class="container" style="background-color: var(--gray-50);">
+            <h2 class="section-title" data-lang-key="services.title">サービス</h2>
+            <div class="grid">
+                <div class="card fade-in delay-1">
+                    <h3 data-lang-key="services.webDesign">ウェブデザイン</h3>
+                    <p data-lang-key="services.webDesignDesc">ユーザーフレンドリーなウェブサイトを設計します。</p>
+                </div>
+                <div class="card fade-in delay-2">
+                    <h3 data-lang-key="services.dev">アプリ開発</h3>
+                    <p data-lang-key="services.devDesc">モバイルアプリケーションを開発します。</p>
+                </div>
+                <div class="card fade-in delay-1">
+                    <h3 data-lang-key="services.development0">留学</h3>
+                    <p data-lang-key="services.developmentDesc0">専門的な留学コンサルティングと語学研修プログラムで、学生の国際的な視野を広げます。</p>
+                </div>
+                <div class="card fade-in delay-2">
+                    <h3 data-lang-key="services.development1">労働者派遣</h3>
+                    <p data-lang-key="services.developmentDesc1">企業の柔軟な雇用ニーズを満たす信頼できる人材派遣サービスを提供します。</p>
+                </div>
+                <div class="card fade-in delay-3">
+                    <h3 data-lang-key="services.development2">翻訳</h3>
+                    <p data-lang-key="services.developmentDesc2">多言語の専門翻訳サービスにより、異文化コミュニケーションの正確性を確保します。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 联系我们 -->
+        <section id="contact" class="container fade-in delay-1">
+            <h2 class="section-title" data-lang-key="contact.title">お問い合わせ</h2>
+            <div style="max-width: 600px; margin: 0 auto; text-align: center;">
+                <a href="mailto:goodsallyok@126.com" class="btn" style="margin-top: 1rem;" data-lang-key="contact.cta">メールで問い合わせ</a>
+                <p data-lang-key="contact.desc"></p>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <p data-lang-key="footer.copyright">© 2025 B.V.C国際合同会社. 全著作権所有. </p>
+        </div>
+    </footer>
+
+    <script>
+        // 多语言翻译数据
+        const translations = {
+            ja: {
+                'navbar.logo': 'B.V.C国際合同会社',
+                'navbar.home': 'ホーム',
+                'navbar.about': '会社概要',
+                'navbar.services': 'サービス',
+                'navbar.portfolio': 'チームメンバー',
+                'navbar.contact': 'お問い合わせ',
+                'hero.title': '「関わった人全てをハッピーに」という理念のもと',
+                'hero.subtitle': '私たちはお客様一人ひとりの夢や希望を全力でサポートし、笑顔あふれる未来の実現を目指します。',
+                'hero.cta': '詳細を見る',
+                'about.title': '会社概要',
+                'about.values': '',
+                'about.valuesList1': '',
+                'about.valuesList2': '',
+                'about.valuesList3': '',
+                'about.valuesList4': '',
+                'about.mission': '私たちの使命',
+                'about.missionText': 'Consulting」の略です。これは、進むべき道を見出せるための架け橋を表しています。弊社事業を通じて、国際教育の発展を促進し、より多くの学生に専門的で質の高い留学サービスを提供し、学生皆さんの未来を切り開く手助けができることを願っています。',
+                'services.title': 'サービス',
+                'services.webDesign': 'ウェブデザイン',
+                'services.webDesignDesc': 'ユーザーフレンドリーなウェブサイトを設計します。',
+                'services.dev': 'アプリ開発',
+                'services.devDesc': 'モバイルアプリケーションを開発します。',
+                'services.branding': '',
+                'services.brandingDesc': '',
+                'services.development0': '留学',
+                'services.developmentDesc0': '専門的な留学コンサルティングと語学研修プログラムで、学生の国際的な視野を広げます。',
+                'services.development1': '労働者派遣',
+                'services.developmentDesc1': '企業の柔軟な雇用ニーズを満たし、信頼できる人材派遣サービスを提供します。',
+                'services.development2': '翻訳',
+                'services.developmentDesc2': '多言語の専門翻訳サービスにより、異文化コミュニケーションの正確性を確保します。',
+                'contact.title': 'お問い合わせ',
+                'contact.desc': '',
+                'contact.cta': 'カンタンお問い合わせ',
+                'footer.copyright': '© 2025 B.V.C国際合同会社. 全著作権所有.'
+            },
+            zh: {
+                'navbar.logo': 'B.V.C国际联合公司',
+                'navbar.home':' 首页',
+                'navbar.about':'公司简介',
+                'navbar.services':'服务',
+                'navbar.portfolio':'团队成员',
+                'navbar.contact':'联系我们',
+                'hero.title':'我们的理念是让所有参与者都HAPPY！',
+                'hero.subtitle':'我们将全力支持每个客户的梦想和希望,力争实现充满笑容的未来。',
+                'hero.cta':'查看详细信息',
+                'about.title':'关于我们',
+                'about.values':'',
+                'about.valuesList1':'',
+                'about.valuesList2':'',
+                'about.valuesList3':'',
+                'about.valuesList4':'',
+                'about.mission':'我们的使命',
+                'about.missionText': 'B.V.C是Bridge Vision Consulting的缩写。 这代表着一座桥梁，可以让你找到前进的道路。 希望通过我们的事业，促进国际教育的发展，为更多的学生提供专业、高质量的留学服务，帮助学生开拓未来。',
+                'services.title':'服务',
+                'services.webDesign':'网页设计',
+                'services.webDesignDesc':'设计用户友好的网站。',
+                'services.dev':'APP开发',
+                'services.devDesc':'开发移动APP应用程序。',
+                'services.branding':'',
+                'services.brandingDesc':'',
+                'services.development0':'留学',
+                'services.developmentDesc0':'专业留学咨询和语言培训计划,拓宽学生的国际视野。',
+                'services.development1':'人才派遣',
+                'services.developmentDesc1':'满足企业灵活的雇佣需求,提供可靠的人力派遣服务。',
+                'services.development2':'翻译',
+                'services.developmentDesc2':'多语言专业翻译服务确保跨文化交流的准确性。',
+                'contact.title':'联系我们',
+                'contact.desc':'',
+                'contact.cta':'联系我们',
+                'footer.copyright': '© 2025 B.V.C国际联合公司.所有版权所有.'
+            },
+            en: {
+                'navbar.logo': 'B.V.C International United Company',
+                'navbar.home': 'Home',
+                'navbar.about': 'About',
+                'navbar.services': 'Services',
+                'navbar.portfolio': 'Team Members',
+                'navbar.contact': 'Contact',
+                'hero.title': 'Under the idea of making all the participants happy',
+                'hero.subtitle': 'We will fully support the dreams and hopes of every customer and strive to realize a smiling future.',
+                'hero.cta': 'Learn More',
+                'about.title': 'About Us',
+                'about.mission': 'Our Mission',
+                'about.missionText': 'B.V.C is the abbreviation of Bridge Vision Consulting. This represents a bridge that allows you to find your way forward. I hope that through our career, we can promote the development of international education, provide more students with professional and high-quality study abroad services, and help students explore the future.',
+                'services.title': 'Services',
+                'services.webDesign': 'Web Design',
+                'services.webDesignDesc': 'Designing modern and user-friendly websites.',
+                'services.dev': 'Soft Development',
+                'services.devDesc': 'We develop applications。',
+                'services.branding': 'E-commerce',
+                'services.brandingDesc': 'We build online stores for product sales with integrated payment systems.',
+                'services.development0': 'Study Abroad',
+                'services.developmentDesc0': 'Professional study abroad consulting and language training programs to expand students international horizons.',
+                'services.development1': 'Labor Dispatch',
+                'services.developmentDesc1': 'We provide reliable personnel dispatch services to meet the flexible employment needs of companies.',
+                'services.development2': 'Translation',
+                'services.developmentDesc2': 'Professional multilingual translation services ensure accurate cross-cultural communication.',
+                'contact.title': 'Contact Us',
+                'contact.desc': '',
+                'contact.cta': 'Contact Us',
+                'footer.copyright': '© 2025 B.V.C International United Company. All rights reserved.'
+            }
+        };
+
+        // 语言切换功能
+        document.addEventListener('DOMContentLoaded', function() {
+            // 移动端菜单切换
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            
+            menuToggle.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+                this.textContent = navLinks.classList.contains('active') ? '✕' : '☰';
+            });
+            
+            // 点击导航链接后关闭菜单（移动端）
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth <= 767) {
+                        navLinks.classList.remove('active');
+                        menuToggle.textContent = '☰';
+                    }
+                });
+            });
+            
+            // 语言切换按钮
+            const langButtons = document.querySelectorAll('.language-btn');
+            
+            langButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    
+                    // 更新活动按钮状态
+                    langButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // 更新页面内容语言
+                    updateLanguage(lang);
+                });
+            });
+            
+            // 初始显示日语
+            updateLanguage('ja');
+            
+            // 监听窗口大小变化，确保在大屏幕上菜单正常显示
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 767) {
+                    navLinks.classList.remove('active');
+                    menuToggle.textContent = '☰';
+                }
+            });
+            
+            // 滚动动画
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            const fadeInObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            fadeElements.forEach(element => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(20px)';
+                element.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+                fadeInObserver.observe(element);
+            });
+        });
+        
+        // 更新页面语言
+        function updateLanguage(lang) {
+            // 获取所有需要翻译的元素
+            document.querySelectorAll('[data-lang-key]').forEach(element => {
+                const key = element.getAttribute('data-lang-key');
+                
+                // 设置元素文本内容
+                if (translations[lang] && translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+            
+            // 更新HTML语言属性
+            document.documentElement.lang = lang;
+            
+            // 更新页面标题
+            document.title = translations[lang]['navbar.logo'];
+        }
+    </script>
+</body>
+</html>
